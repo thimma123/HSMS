@@ -1,0 +1,6 @@
+com\hsms\gateway\ApiGatewayApplication.class
+com\hsms\gateway\config\JwtUtil.class
+com\hsms\gateway\config\Roles.class
+com\hsms\gateway\config\AuthenticationFilter.class
+com\hsms\gateway\config\RouterValidator.class
+com\hsms\gateway\config\AuthenticationFilter$Config.class

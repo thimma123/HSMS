@@ -1,0 +1,244 @@
+{
+	"info": {
+		"_postman_id": "0f47bbcc-4b40-4fdf-b8f4-6a56e0766def",
+		"name": "Notification-Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "NotificationController",
+			"item": [
+				{
+					"name": "Create Notification",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"if(jsonData.notificationId) {",
+									"    pm.environment.set(\"notificationId\", jsonData.notificationId);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": {{userId}},\n  \"message\": \"Test Notification message\",\n  \"status\": \"PENDING\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/notifications",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"notifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Notifications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/notifications",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"notifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Notification by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/notifications/{{notificationId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"{{notificationId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Notification",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": {{userId}},\n  \"message\": \"Updated Notification message\",\n  \"status\": \"SENT\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/notifications/{{notificationId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"{{notificationId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Notification",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/notifications/{{notificationId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"{{notificationId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

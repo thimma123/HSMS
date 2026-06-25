@@ -1,0 +1,92 @@
+package com.hsms.userservice.controller;
+
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.hsms.userservice.model.CustomerDetailResponseDTO;
+import com.hsms.userservice.model.CustomerProfileRequestDTO;
+import com.hsms.userservice.security.CustomPrincipal;
+import com.hsms.userservice.security.RoleValidator;
+import com.hsms.userservice.security.Roles;
+import com.hsms.userservice.security.SecurityUtils;
+import com.hsms.userservice.service.UserService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/api/customers")
+public class CustomerController {
+
+	private final UserService service;
+
+	public CustomerController(UserService service) {
+		this.service = service;
+	}
+
+	@PreAuthorize("hasAnyAuthority('CUSTOMER','ADMIN')")
+	@PostMapping
+	public ResponseEntity<CustomerDetailResponseDTO> createCustomer(
+			@Valid @RequestBody CustomerProfileRequestDTO dto) {
+		CustomPrincipal principal = SecurityUtils.getCurrentUser();
+		String role = principal != null ? principal.getRole() : null;
+		Long userId = principal != null ? principal.getUserId() : null;
+		String email = principal != null ? principal.getEmail() : null;
+
+		RoleValidator.validate(role, Roles.CUSTOMER, Roles.ADMIN);
+
+		return new ResponseEntity<>(service.createCustomer(dto, userId, email), HttpStatus.CREATED);
+	}
+
+	@PreAuthorize("hasAnyAuthority('ADMIN','SERVICE_MANAGER') or #userId == authentication.principal.userId")
+	@PutMapping("/{userId}")
+	public ResponseEntity<CustomerDetailResponseDTO> updateCustomer(@PathVariable Long userId,
+			@Valid @RequestBody CustomerProfileRequestDTO dto) {
+
+		return ResponseEntity.ok(service.updateCustomer(userId, dto));
+	}
+
+	@PreAuthorize("hasAnyAuthority('ADMIN','SERVICE_MANAGER') or #userId == authentication.principal.userId")
+	@GetMapping("/{userId}")
+	public ResponseEntity<CustomerDetailResponseDTO> getCustomer(@PathVariable Long userId) {
+
+		return ResponseEntity.ok(service.getCustomer(userId));
+	}
+
+	@PreAuthorize("hasAnyAuthority('ADMIN','SERVICE_MANAGER')")
+	@GetMapping
+	public ResponseEntity<List<CustomerDetailResponseDTO>> getAllCustomers() {
+		CustomPrincipal principal = SecurityUtils.getCurrentUser();
+		String role = principal != null ? principal.getRole() : null;
+
+		RoleValidator.validate(role, Roles.ADMIN, Roles.SERVICE_MANAGER);
+
+		return ResponseEntity.ok(service.getAllCustomers());
+	}
+
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@DeleteMapping("/{userId}")
+	public ResponseEntity<String> deleteCustomer(@PathVariable Long userId) {
+
+		service.deleteCustomer(userId);
+
+		return ResponseEntity.ok("Customer Deleted Successfully");
+	}
+
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/customerId/{customerId}")
+	public ResponseEntity<CustomerDetailResponseDTO> getCustomerById(@PathVariable Long customerId) {
+
+		return ResponseEntity.ok(service.getCustomerById(customerId));
+	}
+}

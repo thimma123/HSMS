@@ -1,0 +1,287 @@
+{
+	"info": {
+		"_postman_id": "ee47bbcc-4b40-4fdf-b8f4-6a56e0766def",
+		"name": "Payment-Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PaymentController",
+			"item": [
+				{
+					"name": "Create Payment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"if(jsonData.paymentId) {",
+									"    pm.environment.set(\"paymentId\", jsonData.paymentId);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"serviceRequestId\": {{bookingId}},\n  \"customerId\": {{customerId}},\n  \"amount\": 450.0,\n  \"paymentMethod\": \"UPI\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/payments/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payments",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payment by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/payments/{{paymentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payments",
+								"{{paymentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payments by Customer ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/payments/customer/{{customerId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payments",
+								"customer",
+								"{{customerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Payment Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/payments/status/{{paymentId}}?status=SUCCESS",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payments",
+								"status",
+								"{{paymentId}}"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "SUCCESS"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Payments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/payments/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payments",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Payment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/payments/{{paymentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payments",
+								"{{paymentId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

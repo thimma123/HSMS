@@ -1,0 +1,511 @@
+{
+	"info": {
+		"_postman_id": "bb47bbcc-4b40-4fdf-b8f4-6a56e0766def",
+		"name": "Booking-Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ServiceRequestController",
+			"item": [
+				{
+					"name": "Create Booking Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"if(jsonData.requestId) {",
+									"    pm.environment.set(\"bookingId\", jsonData.requestId);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"categoryId\": {{categoryId}},\n  \"address\": \"123 Park Avenue\",\n  \"scheduledDateTime\": \"2026-08-10T11:00:00\",\n  \"description\": \"Fix pipe leakage in main master bathroom\",\n  \"city\": \"Mumbai\",\n  \"pincode\": \"400001\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Booking Requests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/my-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"my-requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Booking Requests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking Request by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/{{bookingId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"{{bookingId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Booking Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"categoryId\": {{categoryId}},\n  \"address\": \"456 Elm Street\",\n  \"scheduledDateTime\": \"2026-08-11T12:00:00\",\n  \"description\": \"Fix master bathroom leakages, tap dripping\",\n  \"city\": \"Mumbai\",\n  \"pincode\": \"400001\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/{{bookingId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"{{bookingId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/{{bookingId}}/cancel",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"{{bookingId}}",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking Requests by status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/status/CREATED",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"status",
+								"CREATED"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking Requests by technicianId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/technician/{{technicianId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"technician",
+								"{{technicianId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking Requests by categoryId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/category/{{categoryId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"category",
+								"{{categoryId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Booking Request Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/{{bookingId}}/status?status=ASSIGNED&technicianId={{technicianId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"{{bookingId}}",
+								"status"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "ASSIGNED"
+								},
+								{
+									"key": "technicianId",
+									"value": "{{technicianId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Summary for Reporting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/summary",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"summary"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
