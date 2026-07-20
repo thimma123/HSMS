@@ -7,6 +7,9 @@ The Home Service Management System (HSMS) is a comprehensive microservices-based
 Tech Stack : 
 
 Backend Framework: Java Spring Boot (REST APIs, Feign Clients, Spring Security)
+
 Architecture: Microservices 
+
 Database: Oracle XE Database (localhost:1521/XE)
+
 Security: JWT (JSON Web Tokens) for Stateless Authentication
