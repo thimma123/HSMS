@@ -1,11 +1,12 @@
-HSMS (Home Services Management System) is a microservices-based web application designed to manage and automate home service bookings such as plumbing, electrical repairs, cleaning, carpentry, and painting.
+Home Service Management System (HSMS)
 
-The system is divided into multiple independent microservices, each responsible for a specific domain: Auth Service for login/registration, User Service for customer and technician management, Assignment Service for job allocation, Payment Service for transactions, and Analytics Service for dashboards and reports.
+Project Description : 
 
-All services communicate through Spring Cloud Gateway and are registered with Eureka Service Discovery for load balancing.
+The Home Service Management System (HSMS) is a comprehensive microservices-based platform designed to connect customers with skilled technicians (plumbers, electricians, cleaners, etc.). It automates and manages the entire lifecycle of a home service request—from user registration and booking to task execution, secure payment processing, and customer feedback.
 
-Data is stored in Oracle Database (SQL), ensuring relational integrity while also supporting JSON for semi‑structured data.
+Tech Stack : 
 
-Security is enforced via Spring Security with JWT, providing role‑based access for Admins, Service Managers, Technicians, and Customers.
-
-This architecture ensures modularity, and maintainability, making HSMS a robust solution for real‑world home service management.
+Backend Framework: Java Spring Boot (REST APIs, Feign Clients, Spring Security)
+Architecture: Microservices 
+Database: Oracle XE Database (localhost:1521/XE)
+Security: JWT (JSON Web Tokens) for Stateless Authentication
